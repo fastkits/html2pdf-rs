@@ -1,0 +1,14 @@
+
+FROM registry.isigning.cn/cicd/ubuntu:24.04
+COPY google-chrome-stable_current_amd64.deb .
+
+COPY SourceHanSerifCN-Regular-1.otf /usr/share/fonts/
+COPY SourceHanSansCN-Regular.otf /usr/share/fonts/
+RUN apt-get update
+RUN rm -rf /etc/localtime && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
+RUN dpkg -i google-chrome-stable_current_amd64.deb || apt-get install -y -f
+RUN rm -rf google-chrome-stable_current_amd64.deb
+CMD []
+
+
+# docker build -t ubuntu-chrome-font:24.04 .
